@@ -1,0 +1,14 @@
+{
+  "name": "File Management",
+  "id": "file-management",
+  "api": "1.0.0",
+  "editorType": ["figma"],
+  "permissions": [],
+  "main": "dist/code.js",
+  "ui": "dist/index.html",
+  "networkAccess": {
+    "allowedDomains": [
+      "https://1090-58-187-189-88.ngrok-free.app/"
+    ]
+  }
+}
