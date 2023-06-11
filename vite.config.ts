@@ -11,8 +11,8 @@ export default defineConfig(({ command, mode }) => {
     root: "./ui-src",
     plugins: [reactRefresh(), viteSingleFile()],
     define: {
-      REACT_APP_API_DNS: env.REACT_APP_API_DNS,
-      NODE_ENV: env.NODE_ENV,
+      REACT_APP_API_DNS: JSON.stringify(env.REACT_APP_API_DNS),
+      NODE_ENV: JSON.stringify(env.NODE_ENV)
     },
     build: {
       target: "esnext",

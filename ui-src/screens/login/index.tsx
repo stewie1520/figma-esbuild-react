@@ -2,9 +2,10 @@ import React from "react"
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup'
+import {} from '@heroicons/react/24/outline/CircleStackIcon'
 import { twMerge } from "tailwind-merge";
 import { AuthApi } from "../../api/auth";
-import { AlertDanger } from "../../components";
+import { AlertDanger, ButtonPrimary } from "../../components";
 
 type LoginForm = { account: string, password: string }
 const loginSchema = Yup.object().shape({
@@ -19,15 +20,19 @@ export const Login = () => {
     resolver: yupResolver(loginSchema)
   });
   const [loginFailed, setLoginFailed] = React.useState('')
+  const [loading, setLoading] = React.useState(false)
 
   const onSubmit = async (payload: LoginForm) => {
     try {
+      setLoading(true)
       const { token } = await AuthApi.loginFake(payload.account, payload.password)
       parent.postMessage({ pluginMessage: { type: 'auth:received-token', data: token } }, '*')
     } catch (error: any) {
       console.log(error)
       setLoginFailed(error.message)
-    }    
+    } finally {
+      setLoading(false)
+    }
   }
 
 
@@ -45,7 +50,9 @@ export const Login = () => {
         <input placeholder="Your password" type="password" {...register("password")} className={twMerge('mt-2', errors.password && errorClass)}/>
         {errors.password && <span className="text-red-500 text-xs">This field is required</span>}
 
-        <button type="submit" className="mt-2 bg-blue-500 text-white hover:bg-blue-400">Continue</button>
+        <ButtonPrimary loading={loading}>
+          Continue
+        </ButtonPrimary>
       </form>
     </div>
   )

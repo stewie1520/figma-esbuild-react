@@ -33,3 +33,13 @@ figma.ui.onmessage = async (msg) => {
 
   figma.closePlugin();
 };
+
+figma.on("selectionchange", () => {
+  if (!token) {
+    return
+  }
+
+  figma.currentPage.selection.forEach((node) => {
+    console.log(node)
+  });
+})
